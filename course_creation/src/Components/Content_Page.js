@@ -53,11 +53,7 @@ const CourseCreationForm = () => {
         courseTopic: '',
         contentCovered: '',
     });
-    
-    fetch('http://localhost:5000/courses')
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error fetching data: ', error));
+   
     let navigate = useNavigate();
 
     const navigateToCourseCreationForm = () => {
@@ -112,45 +108,69 @@ const CourseCreationForm = () => {
         setModalIsOpens(false);
     };
 
+    const useLocalStorage = (key, initialValue) => {
+        const [storedValue, setStoredValue] = useState(() => {
+          try {
+            const item = window.localStorage.getItem(key);
+            return item ? JSON.parse(item) : initialValue;
+          } catch (error) {
+            console.log(error);
+            return initialValue;
+          }
+        });
+      
+        const setValue = value => {
+          try {
+            const valueToStore = value instanceof Function ? value(storedValue) : value;
+            setStoredValue(valueToStore);
+            window.localStorage.setItem(key, JSON.stringify(valueToStore));
+          } catch (error) {
+            console.log(error);
+          }
+        };
+      
+        return [storedValue, setValue];
+      };
+      
+      // Usage:
+      const [topics, setTopics] = useLocalStorage('topics', []);
+      
 
-
-    const [topics, setTopics] = useState([]);
+    //const [topics, setTopics] = useState([]);
     const [error, setError] = useState('');
 
-    const handleSubmit = (e) => {
+       const handleSubmit = (e) => {
         e.preventDefault();
-      
-        // check for duplicate topic
+     
         if (topics.some(topic => topic.courseTopic === course.courseTopic)) {
-          setError('⚠️ Topic already exists in this course. Please try with another topic.');
-          return;
-        }
-      
-        if (course.courseTopic.trim() && course.contentCovered.trim()) {
-          // POST new topic to json-server
-          fetch('http://localhost:5000/topics', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              courseTopic: course.courseTopic,
-              contentCovered: course.contentCovered,
-              isExpanded: true
-            })
-          })
-          .then(response => response.json())
-          .then(newTopic => {
-            setTopics([...topics, newTopic]);
-            setCourse({ title: '', category: '', level: '', duration: '', description: '', thumbnail: null, courseTopic: '', contentCovered: '' });
-            setError('');
-            closeModal();
-          })
-          .catch(error => console.error('Error posting data:', error));
+            setError(' ⚠️ Topic already exists in this course. Please try with another topic.');
         } else {
-          setError('Please fill in all the fields.');
+           
+            if (course.courseTopic.trim() && course.contentCovered.trim()) {
+                setTopics([...topics, {
+                    courseTopic: course.courseTopic,
+                    contentCovered: course.contentCovered,
+                    isExpanded: true
+                }]);
+             
+                setCourse({
+                    title: '',
+                    category: '',
+                    level: '',
+                    duration: '',
+                    description: '',
+                    thumbnail: null,
+                    courseTopic: '',
+                    contentCovered: '',
+                });
+                setError('');
+                closeModal();
+            } else {
+                setError('Please fill in all the fields.');
+            }
         }
-      };
+        
+    };
 
     return (
         <div className="dashboard">
@@ -164,13 +184,6 @@ const CourseCreationForm = () => {
 
                 <div className="user-info">
 
-                    {/* <input
-            onChange={handleChange}
-            type="search"
-            placeholder="Search..."
-            value={searchTerm}
-            className='search-box'
-          /> */}
                     <FaSearch className="icon plus-icon" style={{ fontSize: "17px" }} />
                     <FaPlus className="icon plus-icon" style={{ fontSize: "17px" }} />
                     <FaBell className="icon notification-icon" style={{ fontSize: '17px' }} />
@@ -213,14 +226,7 @@ const CourseCreationForm = () => {
             {/* ------------------------------------------------------------------------------------ */}
 
             <div className="course-creation-page" style={{ display: 'grid', width: '100%', height: '100vh', width: isDesktopOrLaptop ? '100%' : '100vw', width: isBigScreen ? '100%' : '100vw', width: isTabletOrMobile ? '100%' : '100vw', width: isPortrait ? '100%' : '100vw', width: isRetina ? '100%' : '100vw' }}>
-                {/* <div className="navbar" style={{ backgroundColor: '#27235C', display: 'flex', width: '100%', position: 'fixed' }}> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLmMqAoJ3m8Dg4U-ceofLtW2DgjgfFO0odFQ&s" height="40" width="90" style={{ float: 'left' }} /> <div style={{ marginLeft: '1150px' }}>
-
-               <FaSearch className="icon search-icon" style={{ fontSize: '22px' }} />
-               <FaPlus className="icon plus-icon" style={{ fontSize: "22px" }} />
-               <FaBell className="icon notification-icon" style={{ fontSize: '22px' }} />
-               <FaUser className="icon profile-icon" style={{ fontSize: '22px' }} />
-           </div>
-           </div> */}
+              
                 <div className="container" style={{ marginTop: '50px', width: '1054px', height: '505px' }}>
                     {/* Rest of your code */}     <div className="form-container" style={{ width: '1010px' }} >
                         <div className="course-creation-form" style={{ width: '900px' }}>
@@ -311,7 +317,7 @@ const CourseCreationForm = () => {
                             <input type="text" name="contentCovered" value={course.contentCovered} required onChange={handleChange} style={{ width: '410px' }} />
                         </label>
                         <button className="btn btn-danger btn-size" onClick={closeModal}>Cancel</button>
-                        <button className="btn btn-primary btn-size" type="submit">Add</button>
+                        <button className="btn btn-primary btn-size" type="submit" >Add</button>
                     </form>
                 </Modal>
                 {/* ------------------------------------------------------------------------------------- */}

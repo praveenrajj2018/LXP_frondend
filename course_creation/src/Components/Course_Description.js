@@ -89,12 +89,7 @@ const Navbars = () => {
             return topic;
         }));
     };
-    const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 });
-    const isBigScreen = useMediaQuery({ minDeviceWidth: 1824 });
-    const isTabletOrMobile = useMediaQuery({ maxWidth: 1224 });
-    const isPortrait = useMediaQuery({ orientation: 'portrait' });
-    const isRetina = useMediaQuery({ minResolution: '2dppx' });
-
+   
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [modalIsOpens, setModalIsOpens] = useState(false);
     // Function to open the modal
@@ -166,13 +161,6 @@ const Navbars = () => {
 
                 <div className="user-info">
 
-                    {/* <input
-            onChange={handleChange}
-            type="search"
-            placeholder="Search..."
-            value={searchTerm}
-            className='search-box'
-          /> */}
                     <FaSearch className="icon plus-icon" style={{ fontSize: "17px" }} />
                     <FaPlus className="icon plus-icon" style={{ fontSize: "17px" }} />
                     <FaBell className="icon notification-icon" style={{ fontSize: '17px' }} />
@@ -216,12 +204,12 @@ const Navbars = () => {
 
             <div className="course-creation-page" style={{ display: 'grid', width: '100%', height: '100vh' }}>
 
-                <div className="container" style={{ marginTop: '50px', width: '1054px',height:'640px' }}>
-                    {/* Rest of your code */}     <div className="form-container" style={{ width: '1010px',height:'600px' }} >
+                <div className="container" style={{ marginTop: '50px', width: '1054px', height: '640px' }}>
+                    {/* Rest of your code */}     <div className="form-container" style={{ width: '1010px', height: '600px' }} >
                         <div className="course-creation-form" style={{ width: '900px' }}>
                             <div className="content" style={{ width: '1010px' }}>
                                 <main className="main-content" style={{ paddingRight: '80px' }}>
-                                    <h1 style={{paddingRight:'410px'}}>HTML Tutorial for Beginners</h1><hr />
+                                    <h1 style={{ paddingRight: '410px' }}>HTML Tutorial for Beginners</h1><hr />
                                     <div className="course-details">
                                         <div className="course-header" style={{ marginLeft: '760px' }}>
                                             <FaEdit className="edit-icon" style={{ fontSize: '20px', color: "blue", marginRight: '20px' }} />
@@ -233,62 +221,64 @@ const Navbars = () => {
                                             <p style={{ paddingRight: '290px' }}>Course Duration <span className="info-value" style={{ paddingLeft: '160px' }}>: 3 Days</span></p>
                                         </div>
                                         <div className="course-description">
-                                            <p style={{ paddingLeft: '89px' }}>Course Description<span style={{ paddingLeft: '139px'}}>: Have you ever wanted to learn HTML and CSS but 
-                                                                                  it was too <span style={{paddingLeft:'258px'}}>hard or did not have time or money? </span></span>
+                                            <p style={{ paddingLeft: '89px' }}>Course Description<span style={{ paddingLeft: '139px' }}>: Have you ever wanted to learn HTML and CSS but
+                                                it was too <span style={{ paddingLeft: '258px' }}>hard or did not have time or money? </span></span>
 
-                                                
-                                                    <button
-                                                        className="btn"
-                                                        style={{
-                                                            width: '119px',
-                                                            height: '33px',
-                                                            color: 'blue',
-                                                            backgroundColor: '#D9D9D9',marginLeft:'10px', width: '121px',
+
+                                                <button
+                                                    className="btn"
+                                                    style={{
+                                                        width: '119px',
+                                                        height: '33px',
+                                                        color: 'blue',
+                                                        backgroundColor: '#D9D9D9', marginLeft: '10px', width: '121px',
+                                                        height: '32px',
+                                                        gap: '0px',
+                                                        borderradius: '4px 0px 0px 0px',
+                                                        opacity: ' 1'
+                                                    }}
+                                                    onClick={() => setShowPopup(true)}
+                                                >
+                                                    Show More
+                                                </button>
+
+                                                {showPopup && (
+                                                    <div style={{
+                                                        position: 'fixed',
+                                                        top: '50%',
+                                                        left: '50%',
+                                                        transform: 'translate(-50%, -50%)',
+                                                        backgroundColor: 'white',
+                                                        padding: '20px',
+                                                        zIndex: 1000, width: '705px'
+                                                    }}><h1>Course Description</h1><hr /><p>
+                                                            Have you ever wanted to learn HTML and CSS but thought it was too hard or did not have time or money?
+                                                            This step-by-step HTML and CSS course will help you learn coding fast and with an instructor that really cares about his students.
+                                                            Learning to code will help you make more money in your job, or even find a better job, or better yet, get a nice job as a web developer.
+                                                            HTML and CSS are the foundations you need to get into any programming language.</p><br /><br />
+
+                                                        <button onClick={() => setShowPopup(false)} style={{
+                                                            backgroundColor: 'red', width: '121px',
                                                             height: '32px',
                                                             gap: '0px',
                                                             borderradius: '4px 0px 0px 0px',
-                                                            opacity:' 1'
-                                                        }}
-                                                        onClick={() => setShowPopup(true)}
-                                                    >
-                                                        Show More
-                                                    </button>
+                                                            opacity: ' 1', marginLeft: '530px'
+                                                        }}>Close</button>
+                                                    </div>
+                                                )}
 
-                                                    {showPopup && (
-                                                        <div style={{
-                                                            position: 'fixed',
-                                                            top: '50%',
-                                                            left: '50%',
-                                                            transform: 'translate(-50%, -50%)',
-                                                            backgroundColor: 'white',
-                                                            padding: '20px',
-                                                            zIndex: 1000, width: '705px'
-                                                        }}><h1>Course Description</h1><hr /><p>
-                                                                Have you ever wanted to learn HTML and CSS but thought it was too hard or did not have time or money?
-                                                                This step-by-step HTML and CSS course will help you learn coding fast and with an instructor that really cares about his students.
-                                                                Learning to code will help you make more money in your job, or even find a better job, or better yet, get a nice job as a web developer.
-                                                                HTML and CSS are the foundations you need to get into any programming language.</p><br /><br />
-
-                                                            <button onClick={() => setShowPopup(false)} style={{ backgroundColor: 'red', width: '121px',
-  height: '32px',
-  gap: '0px',
-  borderradius: '4px 0px 0px 0px',
-  opacity:' 1',marginLeft:'530px' }}>Close</button>
-                                                        </div>
-                                                    )}
-
-                                                    {showPopup && (
-                                                        <div style={{
-                                                            position: 'fixed',
-                                                            top: 0,
-                                                            bottom: 0,
-                                                            left: 0,
-                                                            right: 0,
-                                                            backgroundColor: 'rgba(0,0,0,0.3)',
-                                                            zIndex: 999
-                                                        }} onClick={() => setShowPopup(false)} />
-                                                    )}
-                                                </p>
+                                                {showPopup && (
+                                                    <div style={{
+                                                        position: 'fixed',
+                                                        top: 0,
+                                                        bottom: 0,
+                                                        left: 0,
+                                                        right: 0,
+                                                        backgroundColor: 'rgba(0,0,0,0.3)',
+                                                        zIndex: 999
+                                                    }} onClick={() => setShowPopup(false)} />
+                                                )}
+                                            </p>
 
                                         </div>
                                         <div className="course-dates">
@@ -297,11 +287,13 @@ const Navbars = () => {
                                         </div>
                                         <div className="course-thumbnail" style={{ paddingRight: '210px' }}>Course Thumbail
 
-                                            <button className="btn" onClick={handleViewClick} style={{ marginLeft: '160px', backgroundColor: '#D9D9D9', color: 'blue', width: '121px',
-  height: '32px',
-  gap: '0px',
-  borderradius: '4px 0px 0px 0px',
-  opacity:' 1' }}>
+                                            <button className="btn" onClick={handleViewClick} style={{
+                                                marginLeft: '160px', backgroundColor: '#D9D9D9', color: 'blue', width: '121px',
+                                                height: '32px',
+                                                gap: '0px',
+                                                borderradius: '4px 0px 0px 0px',
+                                                opacity: ' 1'
+                                            }}>
 
                                                 View
                                             </button>
@@ -317,21 +309,21 @@ const Navbars = () => {
                                             )}
                                         </div><br /><br />
                                         <div className="course-actions">
-                                        < a href='/content-creation' style={{textDecoration:'none',color:'white'}}> 
-                                        <button
-    className={`content-btn ${isActive ? 'active' : 'inactive'}`}
-    style={{ backgroundColor: 'blue',marginLeft:'585px'}}
-    onClick={CourseCreationForm}
-  >
-    Content
-  </button></a>
-  <button
-    className={`inactive-btn ${isActive ? 'inactive' : 'active'}`}
-    onClick={handleToggle} style={{ width: '123px' }}
-  >
-    {isActive ? 'Make Inactive' : 'Make Active'}
-  </button>
-</div></div>
+                                            < a href='/content-creation' style={{ textDecoration: 'none', color: 'white' }}>
+                                                <button
+                                                    className={`content-btn ${isActive ? 'active' : 'inactive'}`}
+                                                    style={{ backgroundColor: 'blue', marginLeft: '585px' }}
+                                                    onClick={CourseCreationForm}
+                                                >
+                                                    Content
+                                                </button></a>
+                                            <button
+                                                className={`inactive-btn ${isActive ? 'inactive' : 'active'}`}
+                                                onClick={handleToggle} style={{ width: '123px' }}
+                                            >
+                                                {isActive ? 'Make Inactive' : 'Make Active'}
+                                            </button>
+                                        </div></div>
 
                                 </main></div></div></div>
                 </div>
